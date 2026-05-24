@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>XPS Courses</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://i.ibb.co/cB5dZZ0/b17c9aec-9d3f-4865-897b-401039eaf8a6.png">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Be Vietnam Pro',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#111827;
+    padding:40px 20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.badge{
+    display:inline-block;
+    background:#ffffff;
+    padding:10px 22px;
+    border-radius:999px;
+    font-weight:700;
+    color:#2563eb;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom:18px;
+}
+
+.title{
+    font-size:54px;
+    font-weight:800;
+    color:#111827;
+    margin-bottom:12px;
+}
+
+.desc{
+    color:#6b7280;
+    font-size:18px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#ffffff;
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.08);
+    transition:0.3s;
+    border:1px solid #e5e7eb;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card img{
+    width:100%;
+    height:350px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:25px;
+}
+
+.course-name{
+    font-size:30px;
+    font-weight:800;
+    margin-bottom:18px;
+    color:#111827;
+}
+
+.info{
+    color:#6b7280;
+    line-height:1.7;
+    margin-bottom:22px;
+}
+
+.bottom{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.price{
+    font-size:42px;
+    font-weight:800;
+    color:#ef4444;
+}
+
+.buy-btn{
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:14px 28px;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+    transition:0.3s;
+}
+
+.buy-btn:hover{
+    background:#1d4ed8;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:999;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.form-box{
+    width:100%;
+    max-width:720px;
+    background:white;
+    border-radius:30px;
+    padding:35px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.25);
+    max-height:95vh;
+    overflow:auto;
+}
+
+.form-title{
+    font-size:38px;
+    font-weight:800;
+    margin-bottom:30px;
+    color:#111827;
+}
+
+.input-group{
+    margin-bottom:20px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:700;
+    color:#111827;
+}
+
+.input-group input,
+.input-group textarea{
+    width:100%;
+    border:1px solid #d1d5db;
+    border-radius:16px;
+    padding:16px;
+    font-size:15px;
+    background:#f9fafb;
+    outline:none;
+}
+
+.input-group input:focus,
+.input-group textarea:focus{
+    border-color:#2563eb;
+}
+
+.input-group textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.money-box{
+    margin-top:25px;
+    border:2px solid #ef4444;
+    border-radius:22px;
+    padding:22px;
+    background:#fff5f5;
+}
+
+.money-row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    font-size:18px;
+}
+
+.red{
+    color:#ef4444;
+    font-weight:800;
+}
+
+.total{
+    font-size:28px;
+}
+
+.note{
+    margin-top:20px;
+    text-align:center;
+    font-size:17px;
+    font-weight:800;
+    color:#dc2626;
+}
+
+.submit-btn{
+    width:100%;
+    margin-top:28px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:18px;
+    border-radius:18px;
+    font-size:18px;
+    font-weight:800;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.submit-btn:hover{
+    background:#1d4ed8;
+}
+
+.close-btn{
+    width:100%;
+    margin-top:14px;
+    border:none;
+    background:#e5e7eb;
+    color:#111827;
+    padding:16px;
+    border-radius:18px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+@media(max-width:768px){
+
+    .title{
+        font-size:40px;
+    }
+
+    .card img{
+        height:280px;
+    }
+
+    .form-box{
+        padding:25px;
+    }
+
+    .form-title{
+        font-size:30px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="badge">
+            ⚡ Hệ thống khoá học XPS
+        </div>
+
+        <div class="title">
+            Khoá Học 2K10 XPS
+        </div>
+
+        <div class="desc">
+            Truy cập khoá học chất lượng cao dành cho học sinh cấp Trung Học Phổ Thông
+        </div>
+
+    </div>
+
+  <div class="products">
+
+    
+    <!-- CARD 2 -->
+    <div class="card">
+
+        <img src="https://i.ibb.co/1YpQcMJW/e2fc856c-e9a3-4007-a437-faa7020f63f7.png" alt="XPS">
+
+        <div class="card-content">
+
+            <div class="course-name">
+                Combo Lớp 11 XPS
+            </div>
+
+            <div class="info">
+                Full khoá học • Ebook • Tài liệu • Update liên tục • Tặng thêm khoá 2026
+            </div>
+
+            <div class="bottom">
+
+                <div class="price">
+                    220K
+                </div>
+
+                <button class="buy-btn"
+                onclick="openForm('Combo Lớp 11 XPS',220000)">
+                    Đăng ký
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+<!-- CARD 1 -->
+    <div class="card">
+
+        <img src="https://i.ibb.co/7dQZGDpW/464c17bc-0563-4a8e-8763-596519cfe25d.png" alt="XPS">
+
+        <div class="card-content">
+
+            <div class="course-name">
+                XPS 2K9 Lớp 12 + ĐGNL
+            </div>
+
+            <div class="info">
+                Full khoá học • Ôn thi THPT • ĐGNL • Ebook • Update liên tục
+            </div>
+
+            <div class="bottom">
+
+                <div class="price">
+                    350K
+                </div>
+
+                <button class="buy-btn"
+                onclick="openForm('XPS 2K9 Lớp 12 + ĐGNL',350000)">
+                    Đăng ký
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
+ <!-- CARD 2 -->
+    <div class="card">
+
+        <img src="https://i.ibb.co/vvw3Btz1/d520dfb2-9e1d-47db-817b-7fd5aee6e861.png" alt="XPS">
+
+        <div class="card-content">
+
+            <div class="course-name">
+                Combo Lớp 10 XPS
+            </div>
+
+            <div class="info">
+                Full khoá học • Ebook • Tài liệu • Update liên tục • Tặng thêm khoá 2026
+            </div>
+
+            <div class="bottom">
+
+                <div class="price">
+                    220K
+                </div>
+
+                <button class="buy-btn"
+                onclick="openForm('Combo Lớp 10 XPS',220000)">
+                    Đăng ký
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- CARD 3 -->
+    <div class="card">
+
+        <img src="https://i.ibb.co/7dQZGDpW/464c17bc-0563-4a8e-8763-596519cfe25d.png" alt="XPS">
+
+        <div class="card-content">
+
+            <div class="course-name">
+                XPS 2K9 Lớp 12 + ĐGNL
+            </div>
+
+            <div class="info">
+                Full khoá học • Ôn thi THPT • ĐGNL • Ebook • Update liên tục
+            </div>
+
+            <div class="bottom">
+
+                <div class="price">
+                    350K
+                </div>
+
+                <button class="buy-btn"
+                onclick="openForm('XPS 2K9 Lớp 12 + ĐGNL',350000)">
+                    Đăng ký
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="modal" id="modal">
+
+    <div class="form-box">
+
+        <div class="form-title">
+            Đăng ký khoá học
+        </div>
+
+        <form id="orderForm">
+
+            <input type="hidden" id="courseName">
+            <input type="hidden" id="coursePrice">
+
+            <div class="input-group">
+                <label>Họ và tên</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="input-group">
+                <label>Zalo hoặc Link Facebook</label>
+                <input type="text" name="social" required>
+            </div>
+
+            <div class="input-group">
+                <label>Email (để add Google Drive)</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Số điện thoại</label>
+                <input type="text" name="phone" required>
+            </div>
+
+            <div class="input-group">
+                <label>Ghi chú</label>
+                <textarea name="note"></textarea>
+            </div>
+
+            <div class="money-box">
+
+                <div class="money-row">
+                    <span>Chi phí sản phẩm</span>
+                    <span class="red" id="productPrice">
+                        220.000đ
+                    </span>
+                </div>
+
+                <div class="money-row">
+                    <span>Chi phí phát sinh</span>
+                    <span class="red">
+                        0đ
+                    </span>
+                </div>
+
+                <div class="money-row total">
+                    <span>Tổng tiền</span>
+                    <span class="red" id="totalPrice">
+                        220.000đ
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="note">
+                Vui lòng điền chính xác thông tin để admin tự động liên hệ hỗ trợ.
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Gửi đăng ký
+            </button>
+
+            <button type="button"
+            class="close-btn"
+            onclick="closeForm()">
+                Đóng
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const modal = document.getElementById("modal");
+
+function openForm(name,price){
+
+    modal.classList.add("active");
+
+    document.getElementById("courseName").value = name;
+    document.getElementById("coursePrice").value = price;
+
+    document.getElementById("productPrice").innerText =
+    price.toLocaleString('vi-VN') + "đ";
+
+    document.getElementById("totalPrice").innerText =
+    price.toLocaleString('vi-VN') + "đ";
+}
+
+function closeForm(){
+    modal.classList.remove("active");
+}
+
+document.getElementById("orderForm")
+.addEventListener("submit",async function(e){
+
+    e.preventDefault();
+
+    const form = e.target;
+
+    const data = {
+        course:document.getElementById("courseName").value,
+        price:document.getElementById("coursePrice").value,
+        name:form.name.value,
+        social:form.social.value,
+        email:form.email.value,
+        phone:form.phone.value,
+        note:form.note.value
+    };
+
+    /*
+    THAY LINK WEB APP GOOGLE SCRIPT
+    */
+
+    await fetch(
+    "https://script.google.com/macros/s/AKfycbzpIFLK0ERLUytjYr9Ax1hF0Bpeq4h1mZ_vKgwddckd8ZjZhM-9htAcWEvtsy55T_MU/exec",
+    {
+        method:"POST",
+        body:JSON.stringify(data)
+    });
+
+    alert("Đăng ký thành công!");
+
+    form.reset();
+
+    closeForm();
+
+});
+
+</script>
+
+</body>
+</html>
